@@ -1,0 +1,13 @@
+[alias]
+lola = !git --no-pager log --color=always --graph --pretty='format:%C(auto)%h %d %s %C(green)%an%C(bold blue) %ad' --all --date=relative | less -R
+gh = !gh
+
+[commit]
+verbose = true
+
+[init]
+defaultbranch = main
+
+[user]
+name = Emiliano Córdoba
+email = 31087818+emicba@users.noreply.github.com
