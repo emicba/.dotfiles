@@ -57,6 +57,34 @@ function __cli() {
     git
 }
 
+function __docker() {
+  sudo apt update
+  # sudo apt remove docker docker-engine docker.io containerd runc
+  # uidmap is required for rootless docker
+  sudo apt install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release \
+    uidmap
+  sudo mkdir -m 0755 -p /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+  sudo apt update
+  sudo apt install \
+    docker-ce \
+    docker-ce-cli \
+    containerd.io \
+    docker-buildx-plugin \
+    docker-compose-plugin
+  sudo systemctl disable --now docker.service docker.socket
+  /usr/bin/dockerd-rootless-setuptool.sh install
+  systemctl --user start docker
+  systemctl --user enable docker
+}
+
 if [[ -z "__$1" || "$(type -t __$1)" != "function" ]]; then
   echo "Usage: $0 [target]"
   exit 1
