@@ -46,7 +46,7 @@ function __pyenv() {
 }
 
 function __dots() {
-  stow .
+  stow home
 }
 
 function __cli() {
