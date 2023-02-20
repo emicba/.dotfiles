@@ -12,6 +12,10 @@ function __vim() {
   popd
 }
 
+function __dots() {
+  stow .
+}
+
 if [[ -z "__$1" || "$(type -t __$1)" != "function" ]]; then
   echo "Usage: $0 [target]"
   exit 1
