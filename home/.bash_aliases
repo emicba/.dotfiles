@@ -9,3 +9,5 @@ alias gd='git diff'
 alias gl='git lola'
 alias gs='git status'
 alias gss='git status -s'
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -selection clipboard -o"

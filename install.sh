@@ -85,7 +85,13 @@ function __docker() {
   systemctl --user enable docker
 }
 
-if [[ -z "__$1" || "$(type -t __$1)" != "function" ]]; then
+function __wezterm() {
+  curl -LO https://github.com/wez/wezterm/releases/download/20221119-145034-49b9839f/wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
+  sudo apt install -y ./wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb || true
+  rm wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
+}
+
+if [[ -z "__${1:-}" || "$(type -t __${1:-})" != "function" ]]; then
   echo "Usage: $0 [target]"
   exit 1
 else
