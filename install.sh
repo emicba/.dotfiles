@@ -12,6 +12,39 @@ function __vim() {
   popd
 }
 
+function __pyenv() {
+  # https://devguide.python.org/getting-started/setup-building/#linux
+  sudo apt update
+  sudo apt install -y --no-install-recommends \
+    build-essential \
+    gdb \
+    lcov \
+    pkg-config \
+    libbz2-dev \
+    libffi-dev \
+    libgdbm-dev \
+    libgdbm-compat-dev \
+    liblzma-dev \
+    libncurses5-dev \
+    libreadline6-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    lzma \
+    lzma-dev \
+    tk-dev \
+    uuid-dev \
+    zlib1g-dev
+
+  # https://github.com/pyenv/pyenv#basic-github-checkout
+  git submodule update --init --recursive
+  bash ./pyenv-installer/bin/pyenv-installer
+  source ~/.bashrc
+  pyenv install 3.10.10
+  pyenv global 3.10.10
+  pip install --upgrade pip
+  pip install ipython pipenv
+}
+
 function __dots() {
   stow .
 }

@@ -1,3 +1,6 @@
 [submodule "neovim"]
 	path = neovim
 	url = https://github.com/neovim/neovim
+[submodule "pyenv-installer"]
+	path = pyenv-installer
+	url = https://github.com/pyenv/pyenv-installer

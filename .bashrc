@@ -97,3 +97,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - --no-rehash bash)"
