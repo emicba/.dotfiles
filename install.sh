@@ -91,6 +91,20 @@ function __wezterm() {
   rm wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
 }
 
+function __fonts() {
+  mkdir -p ~/.local/share/fonts
+
+  curl -L https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o /tmp/JetBrainsMono.zip
+  unzip /tmp/JetBrainsMono.zip -d /tmp/JetBrainsMono
+  cp /tmp/JetBrainsMono/fonts/ttf/*.ttf ~/.local/share/fonts
+
+  curl -L https://github.com/rsms/inter/releases/download/v3.19/Inter-3.19.zip -o /tmp/Inter.zip
+  unzip /tmp/Inter.zip -d /tmp/Inter
+  cp /tmp/Inter/Inter\ Desktop/*.otf ~/.local/share/fonts
+
+  fc-cache -f -v
+}
+
 if [[ -z "__${1:-}" || "$(type -t __${1:-})" != "function" ]]; then
   echo "Usage: $0 [target]"
   exit 1

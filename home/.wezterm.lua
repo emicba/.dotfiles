@@ -39,6 +39,10 @@ return {
   adjust_window_size_when_changing_font_size = false,
   check_for_updates = false,
   color_scheme = 'Dracula',
+  font = wezterm.font {
+    family = 'Jetbrains Mono',
+    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+  },
   font_size = 14,
   inital_cols = 120,
   initial_rows = 30,
