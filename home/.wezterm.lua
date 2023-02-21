@@ -5,11 +5,16 @@ local keys = {
   {
     key = 't',
     mods = 'CTRL',
-    action = act.SpawnCommandInNewTab
+    action = act.SpawnCommandInNewTab,
     -- action = act.SpawnCommandInNewTab {
     --   cwd = wezterm.home_dir,
     -- }
   },
+  {
+    key = 'q',
+    mods = 'CTRL',
+    action = act.ShowDebugOverlay,
+  }
 }
 
 for i = 1, 8 do
@@ -33,6 +38,19 @@ local mouse_bindings = {
     mods = 'CTRL',
     action = act.DecreaseFontSize,
   },
+  {
+    event = { Down = { streak = 1, button = 'Right' } },
+    mods = 'NONE',
+    action = wezterm.action_callback(function(window, pane)
+      local has_selection = window:get_selection_text_for_pane(pane) == ''
+      if has_selection then
+        window:perform_action(act.PasteFrom 'Clipboard', pane)
+      else
+        window:perform_action(act.CopyTo 'ClipboardAndPrimarySelection', pane)
+      end
+      window:perform_action(act.ClearSelection, pane)
+    end),
+  }
 }
 
 return {
@@ -44,7 +62,7 @@ return {
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
   },
   font_size = 14,
-  inital_cols = 120,
+  initial_cols = 120,
   initial_rows = 30,
   keys = keys,
   max_fps = 75,
