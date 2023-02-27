@@ -9,5 +9,13 @@ alias gd='git diff'
 alias gl='git lola'
 alias gs='git status'
 alias gss='git status -s'
+
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
+
+alias pn='pnpm'
+
+alias d='docker'
+alias dk='docker compose'
+alias k='kubectl'
+complete -o default -F __start_kubectl k
