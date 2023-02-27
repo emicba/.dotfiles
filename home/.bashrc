@@ -98,6 +98,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
+
 export EDITOR=nvim
 
 export PYENV_ROOT="$HOME/.pyenv"

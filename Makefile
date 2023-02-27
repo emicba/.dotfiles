@@ -91,6 +91,18 @@ docker: update
 	systemctl --user start docker
 	systemctl --user enable docker
 
+kubectl:
+# $(eval version := $(shell curl -Ls https://dl.k8s.io/release/stable.txt))
+	$(eval version := v1.26.1)
+	curl -LO "https://dl.k8s.io/release/$(version)/bin/linux/amd64/kubectl"
+# curl -LO "https://dl.k8s.io/$(version)/bin/linux/amd64/kubectl.sha256"
+# echo "$$(cat kubectl.sha256)  kubectl" | sha256sum --check
+	echo "d57be22cfa25f7427cfb538cfc8853d763878f8b36c76ce93830f6f2d67c6e5d  kubectl" | sha256sum --check
+	chmod +x kubectl
+	mkdir -p ~/.local/bin
+	mv ./kubectl ~/.local/bin/kubectl
+# rm kubectl.sha256
+
 wezterm:
 	curl -LO https://github.com/wez/wezterm/releases/download/20221119-145034-49b9839f/wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
 	sudo apt install -y ./wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb || true
