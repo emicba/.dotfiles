@@ -108,3 +108,16 @@ fonts:
 	cp /tmp/Inter/Inter\ Desktop/*.otf ~/.local/share/fonts
 
 	fc-cache -f -v
+
+gh-cli:
+	curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
+	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+	sudo apt update
+	sudo apt install gh -y
+
+gh-desktop:
+	curl -LO https://github.com/shiftkey/desktop/releases/download/release-3.1.8-linux1/GitHubDesktop-linux-3.1.8-linux1.deb
+	echo "1d8082b74d5ffb94d43270eaaeffaad235f97560153dbf76fba2bb9f4c8f2c90  GitHubDesktop-linux-3.1.8-linux1.deb" | sha256sum --check
+	sudo apt install -y ./GitHubDesktop-linux-3.1.8-linux1.deb || true
+	rm GitHubDesktop-linux-3.1.8-linux1.deb
