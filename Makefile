@@ -54,6 +54,10 @@ python: update submodule
 	pip install --upgrade pip && \
 	pip install ipython pipenv
 
+node: submodule
+	N_PREFIX=~/.n bash ./n/bin/n lts -y
+	npm install --ignore-scripts -g pnpm
+
 dots:
 	stow home
 
