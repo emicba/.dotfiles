@@ -57,7 +57,29 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  # https://github.com/git/git/blob/v2.39.2/contrib/completion/git-prompt.sh
+  source ~/.git-prompt.sh
+  export GIT_PS1_SHOWDIRTYSTATE=1
+  export GIT_PS1_SHOWCOLORHINTS=1
+
+  __prompt_command() {
+    local exit=$?
+    if [ "$exit" -eq 0 ]; then
+      local lambda="\[\e[32m\]λ"
+    else
+      local lambda="\[\e[31;1m\]λ"
+    fi
+
+    local c_blue="\[\033[38;2;114;159;207m\]"   # 114, 159, 207
+    local c_yellow="\[\033[38;2;252;233;79m\]"  # 252, 233, 79
+    local c_green="\[\033[38;2;138;226;52m\]"   # 138, 226, 52
+    local c_pink="\[\033[38;2;173;127;168m\]"   # 173, 127, 168
+    local c_reset="\[\033[0m\]"
+
+    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}" "${c_reset}\n${lambda}${c_reset} "
+  }
+
+  PROMPT_COMMAND='__prompt_command'
 else
   PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
