@@ -53,6 +53,26 @@ local mouse_bindings = {
   }
 }
 
+local hyperlink_rules = {
+  -- Linkify things that look like URLs and the host has a TLD name.
+  {
+    regex = '\\b\\w+://[\\w.-]+\\.[a-z]{2,15}\\S*\\b',
+    format = '$0',
+  },
+  -- Linkify things that look like URLs with numeric addresses as hosts.
+  -- E.g. http://127.0.0.1:8000 for a local development server,
+  -- or http://192.168.1.1 for the web interface of many routers.
+  {
+    regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
+    format = '$0',
+  },
+  -- Linkify localhost URLs
+  {
+    regex = [[\bhttp://localhost(:\d{1,5})?\S*\b]],
+    format = '$0',
+  }
+}
+
 return {
   adjust_window_size_when_changing_font_size = false,
   check_for_updates = false,
@@ -62,6 +82,7 @@ return {
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
   },
   font_size = 14,
+  hyperlink_rules = hyperlink_rules,
   initial_cols = 120,
   initial_rows = 30,
   keys = keys,
