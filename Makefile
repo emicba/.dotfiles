@@ -143,3 +143,10 @@ fzf:
 	tar -xzf $(binary)
 	mv fzf ~/.local/bin/fzf
 	rm $(binary)
+
+jq:
+	if [ -x ~/.local/bin/jq ]; then echo "jq already installed"; false; fi
+	curl -LO https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+	echo "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44 jq-linux64" | sha256sum --check
+	chmod +x jq-linux64f
+	mv jq-linux64 ~/.local/bin/jq
