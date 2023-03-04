@@ -128,5 +128,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - --no-rehash bash)"
 
+export PIPENV_VENV_IN_PROJECT=1
+export PIPENV_VERBOSITY=-1
+
 export N_PREFIX="$HOME/.n"
 export PATH="$N_PREFIX/bin:$PATH"
