@@ -4,15 +4,22 @@ gh = !gh
 
 [commit]
 verbose = true
+gpgsign = true
 
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+process = git-lfs filter-process
+required = true
 
 [init]
 defaultbranch = main
+
+[pull]
+ff = only
+
+[push]
+autoSetupRemote = true
 
 [user]
 name = Emiliano Córdoba
