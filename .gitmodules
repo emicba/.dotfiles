@@ -7,3 +7,6 @@
 [submodule "n"]
 	path = n
 	url = https://github.com/tj/n
+[submodule "work"]
+	path = work
+	url = git@github.com:emicba/.dotfiles-work.git
