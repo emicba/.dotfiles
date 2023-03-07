@@ -103,6 +103,12 @@ kubectl:
 	mv ./kubectl ~/.local/bin/kubectl
 # rm kubectl.sha256
 
+aws: update submodule
+	cd aws-cli && \
+	./configure --prefix=$$HOME/.local --with-download-deps --with-install-type=portable-exe && \
+	make && \
+	make install
+
 wezterm:
 	curl -LO https://github.com/wez/wezterm/releases/download/20221119-145034-49b9839f/wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
 	sudo apt install -y ./wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb || true
