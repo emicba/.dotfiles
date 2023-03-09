@@ -133,3 +133,5 @@ export PIPENV_VERBOSITY=-1
 
 export N_PREFIX="$HOME/.n"
 export PATH="$N_PREFIX/bin:$PATH"
+
+. "$HOME/.cargo/env"

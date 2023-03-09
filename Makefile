@@ -58,6 +58,10 @@ node: submodule
 	N_PREFIX=~/.n bash ./n/bin/n lts -y
 	npm install --ignore-scripts -g pnpm
 
+rust:
+	$(eval commit := 17db695f1111fb78f9c0d1b83da0b34723fdf04d)
+	curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/rust-lang/rustup/$(commit)/rustup-init.sh | sh -s -- -y --verbose
+
 dots:
 	stow home
 
