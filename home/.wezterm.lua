@@ -14,7 +14,7 @@ local keys = {
     key = 'q',
     mods = 'CTRL',
     action = act.ShowDebugOverlay,
-  }
+  },
 }
 
 for i = 1, 8 do
@@ -50,7 +50,7 @@ local mouse_bindings = {
       end
       window:perform_action(act.ClearSelection, pane)
     end),
-  }
+  },
 }
 
 local hyperlink_rules = {
@@ -70,7 +70,7 @@ local hyperlink_rules = {
   {
     regex = [[\bhttp://localhost(:\d{1,5})?\S*\b]],
     format = '$0',
-  }
+  },
 }
 
 return {

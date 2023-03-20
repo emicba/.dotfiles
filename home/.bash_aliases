@@ -15,6 +15,8 @@ alias gss='git status -s'
 
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
+alias c="xclip -selection clipboard"
+alias p="xclip -selection clipboard -o"
 
 alias pn='pnpm'
 
