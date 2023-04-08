@@ -96,13 +96,13 @@ docker: apt-update
 	systemctl --user start docker
 	systemctl --user enable docker
 
+kubectl: VERSION = v1.26.3
 kubectl:
 # $(eval version := $(shell curl -Ls https://dl.k8s.io/release/stable.txt))
-	$(eval version := v1.26.1)
-	curl -LO "https://dl.k8s.io/release/$(version)/bin/linux/amd64/kubectl"
+	curl -LO "https://dl.k8s.io/release/$(VERSION)/bin/linux/amd64/kubectl"
 # curl -LO "https://dl.k8s.io/$(version)/bin/linux/amd64/kubectl.sha256"
 # echo "$$(cat kubectl.sha256)  kubectl" | sha256sum --check
-	echo "d57be22cfa25f7427cfb538cfc8853d763878f8b36c76ce93830f6f2d67c6e5d  kubectl" | sha256sum --check
+	echo "026c8412d373064ab0359ed0d1a25c975e9ce803a093d76c8b30c5996ad73e75  kubectl" | sha256sum --check
 	chmod +x kubectl
 	mkdir -p ~/.local/bin
 	mv ./kubectl ~/.local/bin/kubectl
