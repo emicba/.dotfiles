@@ -58,9 +58,9 @@ node:
 	N_PREFIX=~/.n bash ./n/bin/n lts -y
 	npm install --ignore-scripts -g pnpm
 
+rust: COMMIT = 17db695f1111fb78f9c0d1b83da0b34723fdf04d
 rust:
-	$(eval commit := 17db695f1111fb78f9c0d1b83da0b34723fdf04d)
-	curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/rust-lang/rustup/$(commit)/rustup-init.sh | sh -s -- -y --verbose
+	curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/rust-lang/rustup/$(COMMIT)/rustup-init.sh | sh -s -- -y --verbose
 
 dots:
 	stow home
@@ -85,7 +85,7 @@ docker: apt-update
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 	sudo apt update
-	sudo apt install \
+	sudo apt install -y \
 		docker-ce \
 		docker-ce-cli \
 		containerd.io \
