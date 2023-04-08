@@ -115,10 +115,12 @@ aws: apt-update
 	make && \
 	make install
 
+wezterm: VERSION = 20230326-111934-3666303c
 wezterm:
-	curl -LO https://github.com/wez/wezterm/releases/download/20221119-145034-49b9839f/wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
-	sudo apt install -y ./wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb || true
-	rm wezterm-20221119-145034-49b9839f.Ubuntu22.04.deb
+	curl -LO https://github.com/wez/wezterm/releases/download/$(VERSION)/wezterm-$(VERSION).Ubuntu22.04.deb
+	echo "56a723fc73e316aed24f4d5b5d33c77232997b65865af5c309ec2bbc8476dbfd  wezterm-$(VERSION).Ubuntu22.04.deb" | sha256sum --check
+	sudo apt install -y ./wezterm-$(VERSION).Ubuntu22.04.deb
+	rm wezterm-$(VERSION).Ubuntu22.04.deb
 
 fonts:
 	mkdir -p ~/.local/share/fonts
