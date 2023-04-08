@@ -1,12 +1,12 @@
 .PHONY: vim pyenv
 
-update:
+apt-update:
 	sudo apt update
 
 submodule:
 	git submodule update --init --recursive
 
-vim: update submodule
+vim: apt-update submodule
 	# https://github.com/neovim/neovim/wiki/Building-Neovim#quick-start
 	sudo apt-get install \
 		ninja-build \
@@ -23,7 +23,7 @@ vim: update submodule
 	cd neovim && make CMAKE_BUILD_TYPE=Release
 	cd neovim && sudo make install
 
-python: update submodule
+python: apt-update submodule
 	# https://devguide.python.org/getting-started/setup-building/#linux
 	sudo apt install -y --no-install-recommends \
 		build-essential \
@@ -65,13 +65,14 @@ rust:
 dots:
 	stow home
 
-cli: update
-	sudo add-apt-repository ppa:git-core/ppa -y
+cli: apt-update
 	sudo apt install --no-install-recommends -y \
-		bat \
-		git
+		curl \
+		stow \
+		xclip \
+		bat
 
-docker: update
+docker: apt-update
 	# sudo apt remove docker docker-engine docker.io containerd runc
 	# uidmap is required for rootless docker
 	sudo apt install -y \
@@ -107,7 +108,7 @@ kubectl:
 	mv ./kubectl ~/.local/bin/kubectl
 # rm kubectl.sha256
 
-aws: update submodule
+aws: apt-update submodule
 	cd aws-cli && \
 	./configure --prefix=$$HOME/.local --with-download-deps --with-install-type=portable-exe && \
 	make && \
