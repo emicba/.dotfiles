@@ -76,7 +76,11 @@ if [ "$color_prompt" = yes ]; then
     local c_pink="\[\033[38;2;173;127;168m\]"   # 173, 127, 168
     local c_reset="\[\033[0m\]"
 
-    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}" "${c_reset}\n${lambda}${c_reset} "
+    if [ -f "${KUBECONFIG:-}" ]; then
+      local k8s_ctx=" ☁️ $(grep 'current-context' "$KUBECONFIG" 2>/dev/null | awk '{print $2}')"
+    fi
+
+    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}${k8s_ctx}" "${c_reset}\n${lambda}${c_reset} "
   }
 
   PROMPT_COMMAND='__prompt_command'
