@@ -149,19 +149,19 @@ gh-desktop:
 	sudo apt install -y ./GitHubDesktop-linux-$(VERSION)-linux1.deb
 	rm GitHubDesktop-linux-$(VERSION)-linux1.deb
 
+fzf: VERSION = 0.39.0
 fzf:
 	if [ -x ~/.local/bin/fzf ]; then echo "fzf already installed"; false; fi
-	$(eval version := 0.38.0)
-	$(eval binary := fzf-$(version)-linux_amd64.tar.gz)
-	curl -LO https://github.com/junegunn/fzf/releases/download/0.38.0/$(binary)
-	echo "6745b1aab975fed7dbdb5813701a39d24591114b237473bed88d3d14ec3d46a5 $(binary)" | sha256sum --check
-	tar -xzf $(binary)
+	curl -LO https://github.com/junegunn/fzf/releases/download/$(VERSION)/fzf-$(VERSION)-linux_amd64.tar.gz
+	echo "933ab7849a1b37f491573a48c1674676258f828bd744f4a73229056b26cb21d0 fzf-$(VERSION)-linux_amd64.tar.gz" | sha256sum --check
+	tar -xzf fzf-$(VERSION)-linux_amd64.tar.gz
 	mv fzf ~/.local/bin/fzf
-	rm $(binary)
+	rm fzf-$(VERSION)-linux_amd64.tar.gz
 
+jq: VERSION = 1.6
 jq:
 	if [ -x ~/.local/bin/jq ]; then echo "jq already installed"; false; fi
-	curl -LO https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+	curl -LO https://github.com/stedolan/jq/releases/download/jq-$(VERSION)/jq-linux64
 	echo "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44 jq-linux64" | sha256sum --check
 	chmod +x jq-linux64f
 	mv jq-linux64 ~/.local/bin/jq
