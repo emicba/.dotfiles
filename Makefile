@@ -3,12 +3,10 @@
 apt-update:
 	sudo apt update
 
-submodule:
-	git submodule update --init --recursive
-
-vim: apt-update submodule
-	# https://github.com/neovim/neovim/wiki/Building-Neovim#quick-start
-	sudo apt-get install \
+vim: apt-update
+	git submodule update --init --recursive neovim
+# https://github.com/neovim/neovim/wiki/Building-Neovim#quick-start
+	sudo apt install -y --no-install-recommends \
 		ninja-build \
 		gettext \
 		libtool \
@@ -19,12 +17,13 @@ vim: apt-update submodule
 		unzip \
 		curl \
 		doxygen
-	git submodule update --init --recursive
 	cd neovim && make CMAKE_BUILD_TYPE=Release
 	cd neovim && sudo make install
 
-python: apt-update submodule
-	# https://devguide.python.org/getting-started/setup-building/#linux
+python: VERSION = 3.11.3
+python:
+	git submodule update --init --recursive pyenv-installer
+# https://devguide.python.org/getting-started/setup-building/#linux
 	sudo apt install -y --no-install-recommends \
 		build-essential \
 		gdb \
@@ -45,16 +44,17 @@ python: apt-update submodule
 		uuid-dev \
 		zlib1g-dev
 
-	# https://github.com/pyenv/pyenv#basic-github-checkout
+# https://github.com/pyenv/pyenv#basic-github-checkout
 	bash ./pyenv-installer/bin/pyenv-installer
 
 	@eval "$$(pyenv init - --no-rehash bash)" && \
-	pyenv install 3.10.10 && \
-	pyenv global 3.10.10 && \
+	pyenv install $(VERSION) && \
+	pyenv global $(VERSION) && \
 	pip install --upgrade pip && \
 	pip install ipython pipenv
 
-node: submodule
+node:
+	git submodule update --init --recursive n
 	N_PREFIX=~/.n bash ./n/bin/n lts -y
 	npm install --ignore-scripts -g pnpm
 
@@ -73,8 +73,8 @@ cli: apt-update
 		bat
 
 docker: apt-update
-	# sudo apt remove docker docker-engine docker.io containerd runc
-	# uidmap is required for rootless docker
+# sudo apt remove docker docker-engine docker.io containerd runc
+# uidmap is required for rootless docker
 	sudo apt install -y \
 		ca-certificates \
 		curl \
@@ -108,7 +108,8 @@ kubectl:
 	mv ./kubectl ~/.local/bin/kubectl
 # rm kubectl.sha256
 
-aws: apt-update submodule
+aws: apt-update
+	git submodule update --init --recursive aws-cli
 	cd aws-cli && \
 	./configure --prefix=$$HOME/.local --with-download-deps --with-install-type=portable-exe && \
 	make && \
