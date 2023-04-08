@@ -139,11 +139,12 @@ gh-cli:
 	sudo apt update
 	sudo apt install gh -y
 
+gh-desktop: VERSION = 3.2.1
 gh-desktop:
-	curl -LO https://github.com/shiftkey/desktop/releases/download/release-3.1.8-linux1/GitHubDesktop-linux-3.1.8-linux1.deb
-	echo "1d8082b74d5ffb94d43270eaaeffaad235f97560153dbf76fba2bb9f4c8f2c90  GitHubDesktop-linux-3.1.8-linux1.deb" | sha256sum --check
-	sudo apt install -y ./GitHubDesktop-linux-3.1.8-linux1.deb || true
-	rm GitHubDesktop-linux-3.1.8-linux1.deb
+	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)-linux1/GitHubDesktop-linux-$(VERSION)-linux1.deb
+	echo "39dbde6d1bce4f269d80d8f3aefe821833e49637e9a38455bd501cf97f618d2a  GitHubDesktop-linux-$(VERSION)-linux1.deb" | sha256sum --check
+	sudo apt install -y ./GitHubDesktop-linux-$(VERSION)-linux1.deb
+	rm GitHubDesktop-linux-$(VERSION)-linux1.deb
 
 fzf:
 	if [ -x ~/.local/bin/fzf ]; then echo "fzf already installed"; false; fi
