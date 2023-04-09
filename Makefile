@@ -165,3 +165,12 @@ jq:
 	echo "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44 jq-linux64" | sha256sum --check
 	chmod +x jq-linux64f
 	mv jq-linux64 ~/.local/bin/jq
+
+postman:
+	curl -L "https://dl.pstmn.io/download/latest/linux64" -o postman.tar.gz
+	$(eval tmp := $(shell mktemp -d))
+	tar -xvzf postman.tar.gz -C $(tmp)
+	sudo mkdir -p /opt/postman
+	sudo mv $(tmp)/Postman/* /opt/postman
+	ln -s /opt/postman/Postman ~/.local/bin/postman
+	rm postman.tar.gz
