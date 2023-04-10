@@ -115,6 +115,15 @@ aws: apt-update
 	make && \
 	make install
 
+k9s: VERSION = v0.27.3
+k9s:
+	curl -L "https://github.com/derailed/k9s/releases/download/$(VERSION)/k9s_Linux_amd64.tar.gz" -o k9s.tar.gz
+	echo "b0eb5fb0decedbee5b6bd415f72af8ce6135ffb8128f9709bc7adcd5cbfa690b  k9s.tar.gz" | sha256sum --check
+	$(eval tmp := $(shell mktemp -d))
+	tar -xvf k9s.tar.gz -C $(tmp)
+	mv "$(tmp)/k9s" ~/.local/bin/k9s
+	rm -rf k9s.tar.gz $(tmp)
+
 wezterm: VERSION = 20230326-111934-3666303c
 wezterm:
 	curl -LO https://github.com/wez/wezterm/releases/download/$(VERSION)/wezterm-$(VERSION).Ubuntu22.04.deb
