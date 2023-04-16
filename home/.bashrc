@@ -80,7 +80,7 @@ if [ "$color_prompt" = yes ]; then
       local k8s_ctx=" ☁️ $(grep 'current-context' "$KUBECONFIG" 2>/dev/null | awk '{print $2}')"
     fi
 
-    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}${k8s_ctx}" "${c_reset}\n${lambda}${c_reset} "
+    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}${k8s_ctx:-}" "${c_reset}\n${lambda}${c_reset} "
   }
 
   PROMPT_COMMAND='__prompt_command'
