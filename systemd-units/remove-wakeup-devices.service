@@ -1,0 +1,9 @@
+[Unit]
+Description=Remove cursed wakeup devices
+
+[Service]
+Type=oneshot
+ExecStart=/home/emi/.dotfiles/systemd-units/remove-wakeup-devices.service.sh
+
+[Install]
+WantedBy=default.target

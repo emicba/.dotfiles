@@ -184,3 +184,12 @@ postman:
 	sudo mv $(tmp)/Postman/* /opt/postman
 	ln -s /opt/postman/Postman ~/.local/bin/postman
 	rm postman.tar.gz
+
+.PHONY: systemd-units
+systemd-units: UNITS = $(wildcard systemd-units/*.service)
+systemd-units:
+	sudo cp $(UNITS) /etc/systemd/system
+	chmod 744 systemd-units/*.service.sh
+	sudo chmod 644 $(subst systemd-units/,/etc/systemd/system/,$(UNITS))
+	sudo systemctl daemon-reload
+	sudo systemctl enable $(subst systemd-units/,,$(UNITS))
