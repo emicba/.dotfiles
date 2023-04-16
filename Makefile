@@ -70,7 +70,8 @@ cli: apt-update
 		curl \
 		stow \
 		xclip \
-		bat
+		bat \
+		ripgrep
 
 docker: apt-update
 # sudo apt remove docker docker-engine docker.io containerd runc
