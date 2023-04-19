@@ -73,6 +73,15 @@ cli: apt-update
 		bat \
 		ripgrep
 
+desktop-apps: apt-update
+	sudo apt install -y \
+		gimp \
+		inkscape \
+		vlc \
+		qemu-kvm \
+		virt-manager
+	sudo usermod -aG libvirt $$USER
+
 docker: apt-update
 # sudo apt remove docker docker-engine docker.io containerd runc
 # uidmap is required for rootless docker
