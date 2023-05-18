@@ -152,6 +152,10 @@ fonts:
 	unzip /tmp/Inter.zip -d /tmp/Inter
 	cp /tmp/Inter/Inter\ Desktop/*.otf ~/.local/share/fonts
 
+	curl -L https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip -o /tmp/CascadiaCode.zip
+	unzip /tmp/CascadiaCode.zip -d /tmp/CascadiaCode
+	cp /tmp/CascadiaCode/ttf/*.ttf ~/.local/share/fonts
+
 	fc-cache -f -v
 
 gh-cli:
