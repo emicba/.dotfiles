@@ -73,14 +73,26 @@ local hyperlink_rules = {
   },
 }
 
-return {
-  adjust_window_size_when_changing_font_size = false,
-  check_for_updates = false,
-  color_scheme = 'Dracula',
-  font = wezterm.font {
+local font_config = {
+  jetbrains_mono = {
     family = 'Jetbrains Mono',
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
   },
+  cascadia_mono = {
+    {
+      family = 'Cascadia Mono'
+    },
+    {
+      weight = 'DemiLight',
+    }
+  }
+}
+
+local config = {
+  adjust_window_size_when_changing_font_size = false,
+  check_for_updates = false,
+  color_scheme = 'Dracula',
+  font = wezterm.font(table.unpack(font_config.cascadia_mono)),
   font_size = 14,
   hyperlink_rules = hyperlink_rules,
   initial_cols = 120,
@@ -89,3 +101,5 @@ return {
   max_fps = 75,
   mouse_bindings = mouse_bindings,
 }
+
+return config
