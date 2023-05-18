@@ -30,3 +30,7 @@ complete -o default -F __start_kubectl k
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias temp='cd `mktemp -d`'
+
+yq() {
+  docker run --rm -i --security-opt=no-new-privileges --cap-drop=all --network=none mikefarah/yq "$@"
+}
