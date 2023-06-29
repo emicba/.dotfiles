@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/emoji-picker"
+EMOJI_LIST="$(readlink -f "$CACHE_DIR/emoji-list.txt")"
+
+mkdir -p "$CACHE_DIR"
+
+if [ ! -f "$EMOJI_LIST" ]; then
+  curl -Ls https://unicode.org/Public/emoji/latest/emoji-test.txt \
+    | sed -ne 's/^.*; \(fully\|minimally\)-qualified.*# \(\S*\) \S* \(.*$\)/\2 \3/gp' > "$EMOJI_LIST"
+fi
+
+emoji=$(rofi -dmenu -i -p 'emoji' <"$EMOJI_LIST" | cut -d' ' -f1)
+xdotool type --delay 200 "$emoji"
+
+# 🐸
