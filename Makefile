@@ -79,7 +79,8 @@ desktop-apps: apt-update
 		inkscape \
 		vlc \
 		qemu-kvm \
-		virt-manager
+		virt-manager \
+		rofi
 	sudo usermod -aG libvirt $$USER
 
 docker: apt-update
