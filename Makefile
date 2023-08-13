@@ -53,10 +53,13 @@ python:
 	pip install --upgrade pip && \
 	pip install ipython pipenv
 
+node: N_PREFIX ?= ~/.n
 node:
 	git submodule update --init --recursive n
-	N_PREFIX=~/.n bash ./n/bin/n lts -y
-	npm install --ignore-scripts -g pnpm
+	mkdir -p ~/.local/bin
+	cp n/bin/n ~/.local/bin/n
+	N_PREFIX="$(N_PREFIX)" n lts -y
+	npm install --ignore-scripts -g pnpm@latest
 
 rust: COMMIT = 17db695f1111fb78f9c0d1b83da0b34723fdf04d
 rust:
