@@ -169,12 +169,13 @@ gh-cli:
 	sudo apt update
 	sudo apt install gh -y
 
-gh-desktop: VERSION = 3.2.1
+gh-desktop: VERSION = 3.2.9
+gh-desktop: FILE = GitHubDesktop-linux-amd64-$(VERSION)-linux1.deb
 gh-desktop:
-	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)-linux1/GitHubDesktop-linux-$(VERSION)-linux1.deb
-	echo "39dbde6d1bce4f269d80d8f3aefe821833e49637e9a38455bd501cf97f618d2a  GitHubDesktop-linux-$(VERSION)-linux1.deb" | sha256sum --check
-	sudo apt install -y ./GitHubDesktop-linux-$(VERSION)-linux1.deb
-	rm GitHubDesktop-linux-$(VERSION)-linux1.deb
+	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)-linux1/$(FILE)
+	echo "1a8de33e1ebc10e4bcecadbbde6c782e543d184e0749a40e3a350113d3205380  $(FILE)" | sha256sum --check
+	sudo apt install -y ./$(FILE)
+	rm $(FILE)
 
 fzf: VERSION = 0.39.0
 fzf:
