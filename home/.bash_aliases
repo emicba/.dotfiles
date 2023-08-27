@@ -21,6 +21,12 @@ alias p="xclip -selection clipboard -o"
 alias pn='pnpm'
 
 alias d='docker'
+__docker() {
+  type _docker &>/dev/null || source /usr/share/bash-completion/completions/docker
+  complete -o default -F _docker d
+  _docker "$@"
+}
+complete -o default -F __docker d
 alias dk='docker compose'
 alias k='kubectl'
 complete -o default -F __start_kubectl k
