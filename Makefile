@@ -223,3 +223,11 @@ obs:
 	sudo apt install -y \
 		ffmpeg \
 		obs-studio
+
+obsidian: VERSION = 1.3.7
+obsidian: FILE = obsidian_$(VERSION)_amd64.deb
+obsidian:
+	curl -LO https://github.com/obsidianmd/obsidian-releases/releases/download/v$(VERSION)/$(FILE)
+	echo "c4795b39933dc4cc1a35a33841f91488fc767f5712731c95f3bbd36e12751894  $(FILE)" | sha256sum --check
+	sudo apt install -y ./$(FILE)
+	rm $(FILE)
