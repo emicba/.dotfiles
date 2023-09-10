@@ -40,3 +40,7 @@ alias temp='cd `mktemp -d`'
 yq() {
   docker run --rm -i --security-opt=no-new-privileges --cap-drop=all --network=none mikefarah/yq "$@"
 }
+
+pkill() {
+  command pkill --echo --ignore-case "$@" 2>/dev/null || true
+}
