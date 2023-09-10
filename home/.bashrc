@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-  # https://github.com/git/git/blob/v2.39.2/contrib/completion/git-prompt.sh
+  # https://github.com/git/git/blob/v2.42.0/contrib/completion/git-prompt.sh
   source ~/.git-prompt.sh
   export GIT_PS1_SHOWDIRTYSTATE=1
   export GIT_PS1_SHOWCOLORHINTS=1
