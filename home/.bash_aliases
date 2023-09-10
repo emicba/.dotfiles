@@ -13,6 +13,17 @@ alias gl='git lola'
 alias gs='git status'
 alias gss='git status -s'
 
+if [ -f "/usr/share/bash-completion/completions/git" ]; then
+  source "/usr/share/bash-completion/completions/git"
+  __git_complete ga _git_add
+  __git_complete gap _git_add
+  __git_complete gcm _git_commit
+  __git_complete gd _git_diff
+  __git_complete gl _git_log
+  __git_complete gs _git_status
+  __git_complete gss _git_status
+fi
+
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
 alias c="xclip -selection clipboard"
