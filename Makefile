@@ -148,17 +148,17 @@ wezterm:
 fonts:
 	mkdir -p ~/.local/share/fonts
 
-	curl -L https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o /tmp/JetBrainsMono.zip
+	curl -fsSL https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o /tmp/JetBrainsMono.zip
 	unzip /tmp/JetBrainsMono.zip -d /tmp/JetBrainsMono
-	cp /tmp/JetBrainsMono/fonts/ttf/*.ttf ~/.local/share/fonts
+	cp -t ~/.local/share/fonts /tmp/JetBrainsMono/fonts/ttf/*.ttf
 
-	curl -L https://github.com/rsms/inter/releases/download/v3.19/Inter-3.19.zip -o /tmp/Inter.zip
+	curl -fsSL https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip -o /tmp/Inter.zip
 	unzip /tmp/Inter.zip -d /tmp/Inter
-	cp /tmp/Inter/Inter\ Desktop/*.otf ~/.local/share/fonts
+	cp -t ~/.local/share/fonts /tmp/Inter/*.ttf /tmp/Inter/extras/ttf/*.ttf
 
-	curl -L https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip -o /tmp/CascadiaCode.zip
+	curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip -o /tmp/CascadiaCode.zip
 	unzip /tmp/CascadiaCode.zip -d /tmp/CascadiaCode
-	cp /tmp/CascadiaCode/ttf/*.ttf ~/.local/share/fonts
+	cp -t ~/.local/share/fonts /tmp/CascadiaCode/ttf/*.ttf
 
 	fc-cache -f -v
 
