@@ -1,0 +1,5 @@
+# Block Logitech Webcam Microphone
+# lsusb | grep "Logitech"
+# Bus 004 Device 002: ID 046d:085e Logitech, Inc. BRIO Ultra HD Webcam
+#                        ^ VENDOR:PRODUCT
+SUBSYSTEM=="usb", DRIVER=="snd-usb-audio", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="085e", ATTR{authorized}="0"
