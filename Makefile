@@ -234,3 +234,15 @@ obsidian:
 	echo "c4795b39933dc4cc1a35a33841f91488fc767f5712731c95f3bbd36e12751894  $(FILE)" | sha256sum --check
 	sudo apt install -y ./$(FILE)
 	rm $(FILE)
+
+firefox-dev:
+ifneq (,$(wildcard /opt/firefox-dev))
+	@echo "Firefox Developer Edition already installed."
+	@false
+endif
+	$(eval TEMP_DIR := $(shell mktemp -d))
+	curl -L "https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US" -o $(TEMP_DIR)/firefox.tar.bz2
+	tar -xvjf $(TEMP_DIR)/firefox.tar.bz2 -C $(TEMP_DIR)
+	sudo mv $(TEMP_DIR)/firefox /opt/firefox-dev
+	rm -rf $(TEMP_DIR)
+	ln -s /opt/firefox-dev/firefox ~/.local/bin/firefox-dev
