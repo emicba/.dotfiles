@@ -152,14 +152,20 @@ wezterm:
 fonts:
 	mkdir -p ~/.local/share/fonts
 
-	curl -fsSL https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o /tmp/JetBrainsMono.zip
+# https://github.com/JetBrains/JetBrainsMono/releases/latest
+	rm -rf /tmp/JetBrainsMono{,.zip}
+	curl -fsSL https://download-cdn.jetbrains.com/fonts/JetBrainsMono-2.304.zip -o /tmp/JetBrainsMono.zip
 	unzip /tmp/JetBrainsMono.zip -d /tmp/JetBrainsMono
 	cp -t ~/.local/share/fonts /tmp/JetBrainsMono/fonts/ttf/*.ttf
 
+# https://github.com/rsms/inter/releases/latest
+	rm -rf /tmp/Inter{,.zip}
 	curl -fsSL https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip -o /tmp/Inter.zip
 	unzip /tmp/Inter.zip -d /tmp/Inter
 	cp -t ~/.local/share/fonts /tmp/Inter/*.ttf /tmp/Inter/extras/ttf/*.ttf
 
+# https://github.com/microsoft/cascadia-code/releases/latest
+	rm -rf /tmp/CascadiaCode{,.zip}
 	curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip -o /tmp/CascadiaCode.zip
 	unzip /tmp/CascadiaCode.zip -d /tmp/CascadiaCode
 	cp -t ~/.local/share/fonts /tmp/CascadiaCode/ttf/*.ttf
