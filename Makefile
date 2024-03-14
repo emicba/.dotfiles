@@ -141,10 +141,11 @@ k9s:
 	mv "$(tmp)/k9s" ~/.local/bin/k9s
 	rm -rf k9s.tar.gz $(tmp)
 
-wezterm: VERSION = 20230712-072601-f4abf8fd
+# https://github.com/wez/wezterm/releases/latest
+wezterm: VERSION = 20240203-110809-5046fc22
 wezterm:
 	curl -LO https://github.com/wez/wezterm/releases/download/$(VERSION)/wezterm-$(VERSION).Ubuntu22.04.deb
-	echo "401624fe364e0f63f225077c63e9ae71ce5684478626eea099c5bcf89df93720 wezterm-$(VERSION).Ubuntu22.04.deb" | sha256sum --check
+	echo "86358dab5794a4fb63f7c91dd68d4fdc3da58faad648a58fc77d2bd51c7b0686 wezterm-$(VERSION).Ubuntu22.04.deb" | sha256sum --check
 	sudo apt install -y ./wezterm-$(VERSION).Ubuntu22.04.deb
 	rm wezterm-$(VERSION).Ubuntu22.04.deb
 

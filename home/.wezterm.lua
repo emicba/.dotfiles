@@ -11,11 +11,7 @@ local function array_concat(...)
   return ret
 end
 
-local config = {}
-
-if wezterm.config_builder then
-  config = wezterm.config_builder()
-end
+local config = wezterm.config_builder()
 
 config.keys = {
   {
@@ -102,6 +98,6 @@ config.color_scheme = 'Dracula'
 config.font_size = 14
 config.initial_cols = 120
 config.initial_rows = 30
-config.max_fps = 75
+config.max_fps = 144
 
 return config
