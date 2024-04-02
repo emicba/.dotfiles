@@ -99,5 +99,8 @@ config.font_size = 14
 config.initial_cols = 120
 config.initial_rows = 30
 config.max_fps = 144
+config.exit_behavior = 'CloseOnCleanExit'
+-- CTRL+C in bash exits with status 130
+config.clean_exit_codes = { 130 }
 
 return config
