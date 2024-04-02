@@ -260,3 +260,7 @@ endif
 	sudo mv $(TEMP_DIR)/firefox /opt/firefox-dev
 	rm -rf $(TEMP_DIR)
 	ln -s /opt/firefox-dev/firefox ~/.local/bin/firefox-dev
+
+bun: VERSION = 1.1.0
+bun:
+	curl -fsSL https://bun.sh/install | bash

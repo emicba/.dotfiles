@@ -70,10 +70,10 @@ if [ "$color_prompt" = yes ]; then
       local lambda="\[\e[31;1m\]λ"
     fi
 
-    local c_blue="\[\033[38;2;114;159;207m\]"   # 114, 159, 207
-    local c_yellow="\[\033[38;2;252;233;79m\]"  # 252, 233, 79
-    local c_green="\[\033[38;2;138;226;52m\]"   # 138, 226, 52
-    local c_pink="\[\033[38;2;173;127;168m\]"   # 173, 127, 168
+    local c_blue="\[\033[38;2;114;159;207m\]"  # 114, 159, 207
+    local c_yellow="\[\033[38;2;252;233;79m\]" # 252, 233, 79
+    local c_green="\[\033[38;2;138;226;52m\]"  # 138, 226, 52
+    local c_pink="\[\033[38;2;173;127;168m\]"  # 173, 127, 168
     local c_reset="\[\033[0m\]"
 
     if [ -f "${KUBECONFIG:-}" ]; then
@@ -139,3 +139,7 @@ export N_PREFIX="$HOME/.n"
 export PATH="$N_PREFIX/bin:$PATH"
 
 . "$HOME/.cargo/env"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH=$BUN_INSTALL/bin:$PATH

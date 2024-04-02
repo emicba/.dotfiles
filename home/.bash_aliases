@@ -55,3 +55,13 @@ yq() {
 pkill() {
   command pkill --echo --ignore-case "$@" 2>/dev/null || true
 }
+
+serve() {
+  if ! command -v bunx >/dev/null; then
+    local Color_Off='\033[0m'
+    local Red='\033[0;31m'
+    echo -e "${Red}bunx is required${Color_Off}"
+    exit 1
+  fi
+  bunx vite --cors --host "0.0.0.0" --open "$@"
+}
