@@ -143,3 +143,8 @@ export PATH="$N_PREFIX/bin:$PATH"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH=$BUN_INSTALL/bin:$PATH
+
+if command -v zoxide >/dev/null; then
+  eval "$(zoxide init --cmd cd bash)"
+  bind -x '"\C-p": __zoxide_zi'
+fi

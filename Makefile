@@ -1,4 +1,4 @@
-.PHONY: vim pyenv
+.PHONY: vim pyenv zoxide
 
 apt-update:
 	sudo apt update
@@ -264,3 +264,10 @@ endif
 bun: VERSION = 1.1.0
 bun:
 	curl -fsSL https://bun.sh/install | bash
+
+zoxide:
+	git submodule update --init --recursive zoxide
+	cd zoxide && cargo build --release --locked
+	cp zoxide/target/release/zoxide ~/.local/bin/zoxide
+	mkdir -p ~/.local/share/man/man1/
+	cp zoxide/man/man1/* ~/.local/share/man/man1/
