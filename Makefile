@@ -170,6 +170,13 @@ fonts:
 	unzip /tmp/CascadiaCode.zip -d /tmp/CascadiaCode
 	cp -t ~/.local/share/fonts /tmp/CascadiaCode/ttf/*.ttf
 
+# https://github.com/vercel/geist-font/releases/latest
+	rm -rf /tmp/GeistMono*{,.zip}
+	$(eval GEIST_VERSION := 1.3.0)
+	curl -fsSL https://github.com/vercel/geist-font/releases/download/$(GEIST_VERSION)/GeistMono-$(GEIST_VERSION).zip -o /tmp/GeistMono.zip
+	unzip /tmp/GeistMono.zip -d /tmp/GeistMono
+	cp -t ~/.local/share/fonts /tmp/GeistMono/GeistMono-1.3.0/variable-ttf/*.ttf
+
 	fc-cache -f -v
 
 gh-cli:
