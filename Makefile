@@ -186,11 +186,11 @@ gh-cli:
 	sudo apt update
 	sudo apt install gh -y
 
-gh-desktop: VERSION = 3.2.9
-gh-desktop: FILE = GitHubDesktop-linux-amd64-$(VERSION)-linux1.deb
+gh-desktop: VERSION = 3.3.12
+gh-desktop: FILE = GitHubDesktop-linux-amd64-$(VERSION)-linux2.deb
 gh-desktop:
-	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)-linux1/$(FILE)
-	echo "1a8de33e1ebc10e4bcecadbbde6c782e543d184e0749a40e3a350113d3205380  $(FILE)" | sha256sum --check
+	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)-linux2/$(FILE)
+	echo "89f94a0fb34fb99be1c6f88d5bcc66b4239881d473d6b5e21b8db27160a35e26  $(FILE)" | sha256sum --check
 	sudo apt install -y ./$(FILE)
 	rm $(FILE)
 
