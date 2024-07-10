@@ -148,3 +148,5 @@ if command -v zoxide >/dev/null; then
   eval "$(zoxide init --cmd cd bash)"
   bind -x '"\C-p": __zoxide_zi'
 fi
+
+export PATH="/usr/local/cuda/bin:$PATH"
