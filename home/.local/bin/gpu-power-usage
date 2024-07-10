@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+
+import signal
+import subprocess
+import threading
+import tkinter as tk
+
+
+class App(threading.Thread):
+    def run(self) -> None:
+        root = self.root = tk.Tk()
+        root.overrideredirect(True)
+        root.attributes("-topmost", True)
+        root.wait_visibility()
+        root.wm_attributes("-alpha", 0.5)
+
+        root.bind("<Control-c>", self.quit)
+        root.bind("<Button-3>", self.quit)
+
+        label = self.label = tk.Label(root, fg="white", bg="black", font="monospace 24")
+        label.pack()
+
+        self.update_label()
+        root.mainloop()
+
+    def quit(self, *args, **kwargs) -> None:
+        self.root.quit()
+        self.root.update()
+
+    def update_label(self) -> None:
+        if not self.is_alive():
+            return
+        try:
+            ret = (
+                subprocess.check_output(
+                    [
+                        "nvidia-smi",
+                        "--query-gpu=power.draw,temperature.gpu",
+                        "--format=csv,noheader,nounits",
+                    ]
+                )
+                .decode()
+                .strip()
+            )
+        except subprocess.CalledProcessError:
+            ret = "0,0"
+        power_draw, temp = map(float, ret.split(","))
+        self.label["text"] = f"{power_draw:.0f} W {temp:.0f}°C"
+        # self.label.update()
+
+        width = self.label.winfo_reqwidth()
+        height = self.label.winfo_reqheight()
+        x = self.root.winfo_screenwidth() - width - 2
+        # x = (self.root.winfo_screenwidth() - width) // 2
+        y = self.root.winfo_screenheight() - height - 2
+        self.root.geometry(f"{width}x{height}+{x}+{y}")
+
+        timeout = 1000 if power_draw > 150 else 5000
+        self.root.after(timeout, self.update_label)
+
+
+def main() -> int:
+    app = App()
+    signal.signal(signal.SIGINT, app.quit)
+    app.start()
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
