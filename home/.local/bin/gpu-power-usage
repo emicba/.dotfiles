@@ -3,16 +3,23 @@
 import signal
 import subprocess
 import threading
+import argparse
 import tkinter as tk
+from typing import Any
 
 
 class App(threading.Thread):
+    def __init__(self, args: Any) -> None:
+        super().__init__()
+        self.opacity = args.opacity
+        self.offset = args.offset
+
     def run(self) -> None:
         root = self.root = tk.Tk()
         root.overrideredirect(True)
         root.attributes("-topmost", True)
         root.wait_visibility()
-        root.wm_attributes("-alpha", 0.5)
+        root.wm_attributes("-alpha", self.opacity)
 
         root.bind("<Control-c>", self.quit)
         root.bind("<Button-3>", self.quit)
@@ -46,13 +53,11 @@ class App(threading.Thread):
             ret = "0,0"
         power_draw, temp = map(float, ret.split(","))
         self.label["text"] = f"{power_draw:.0f} W {temp:.0f}°C"
-        # self.label.update()
 
         width = self.label.winfo_reqwidth()
         height = self.label.winfo_reqheight()
-        x = self.root.winfo_screenwidth() - width - 2
-        # x = (self.root.winfo_screenwidth() - width) // 2
-        y = self.root.winfo_screenheight() - height - 2
+        x = self.root.winfo_screenwidth() - width - self.offset
+        y = self.root.winfo_screenheight() - height - self.offset
         self.root.geometry(f"{width}x{height}+{x}+{y}")
 
         timeout = 1000 if power_draw > 150 else 5000
@@ -60,7 +65,12 @@ class App(threading.Thread):
 
 
 def main() -> int:
-    app = App()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--opacity", type=float, default=0.5)
+    parser.add_argument("--offset", type=int, default=2)
+    args = parser.parse_args()
+
+    app = App(args=args)
     signal.signal(signal.SIGINT, app.quit)
     app.start()
     return 0
