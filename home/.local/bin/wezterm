@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if ! command -v wezterm >/dev/null; then
+  echo "wezterm: command not found" >&2
+  exit 1
+fi
+
+read WIDTH < <(xrandr --current | grep '*' | grep -oE '[0-9]+')
+
+ARGS="$@"
+
+if [ "$WIDTH" -lt "1920" ]; then
+  ARGS=" --config font_size=12 --config initial_cols=80 --config initial_rows=20"
+fi
+
+/usr/bin/wezterm $ARGS
