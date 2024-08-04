@@ -149,6 +149,7 @@ wezterm:
 	sudo apt install -y ./wezterm-$(VERSION).Ubuntu22.04.deb
 	rm wezterm-$(VERSION).Ubuntu22.04.deb
 
+fonts: GEIST_VERSION = 1.3.0
 fonts:
 	mkdir -p ~/.local/share/fonts
 
@@ -166,16 +167,15 @@ fonts:
 
 # https://github.com/microsoft/cascadia-code/releases/latest
 	rm -rf /tmp/CascadiaCode{,.zip}
-	curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2111.01/CascadiaCode-2111.01.zip -o /tmp/CascadiaCode.zip
+	curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2404.23/CascadiaCode-2404.23.zip -o /tmp/CascadiaCode.zip
 	unzip /tmp/CascadiaCode.zip -d /tmp/CascadiaCode
 	cp -t ~/.local/share/fonts /tmp/CascadiaCode/ttf/*.ttf
 
 # https://github.com/vercel/geist-font/releases/latest
 	rm -rf /tmp/GeistMono*{,.zip}
-	$(eval GEIST_VERSION := 1.3.0)
 	curl -fsSL https://github.com/vercel/geist-font/releases/download/$(GEIST_VERSION)/GeistMono-$(GEIST_VERSION).zip -o /tmp/GeistMono.zip
 	unzip /tmp/GeistMono.zip -d /tmp/GeistMono
-	cp -t ~/.local/share/fonts /tmp/GeistMono/GeistMono-1.3.0/variable-ttf/*.ttf
+	cp -t ~/.local/share/fonts /tmp/GeistMono/GeistMono-$(GEIST_VERSION)/variable-ttf/*.ttf
 
 	fc-cache -f -v
 
@@ -184,32 +184,39 @@ gh-cli:
 	sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg
 	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 	sudo apt update
-	sudo apt install gh -y
+	sudo apt install -y gh
 
-gh-desktop: VERSION = 3.3.12
-gh-desktop: FILE = GitHubDesktop-linux-amd64-$(VERSION)-linux2.deb
+# https://github.com/shiftkey/desktop/releases/latest
+gh-desktop: VERSION = 3.4.2-linux1
+gh-desktop: FILE = GitHubDesktop-linux-amd64-$(VERSION).deb
 gh-desktop:
-	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)-linux2/$(FILE)
-	echo "89f94a0fb34fb99be1c6f88d5bcc66b4239881d473d6b5e21b8db27160a35e26  $(FILE)" | sha256sum --check
+	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)/$(FILE)
+	echo " a98e6b0af3a07f5fd9d345d9eb2027eb329d519fba9783c2b613d4e385cb2a17  $(FILE)" | sha256sum --check
 	sudo apt install -y ./$(FILE)
 	rm $(FILE)
 
-fzf: VERSION = 0.39.0
+# https://github.com/junegunn/fzf/releases/latest
+fzf: VERSION = 0.54.3
+fzf: FILE = fzf-$(VERSION)-linux_amd64.tar.gz
 fzf:
-	if [ -x ~/.local/bin/fzf ]; then echo "fzf already installed"; false; fi
-	curl -LO https://github.com/junegunn/fzf/releases/download/$(VERSION)/fzf-$(VERSION)-linux_amd64.tar.gz
-	echo "933ab7849a1b37f491573a48c1674676258f828bd744f4a73229056b26cb21d0 fzf-$(VERSION)-linux_amd64.tar.gz" | sha256sum --check
-	tar -xzf fzf-$(VERSION)-linux_amd64.tar.gz
+# if [ -x ~/.local/bin/fzf ]; then echo "fzf already installed"; false; fi
+	curl -LO https://github.com/junegunn/fzf/releases/download/v$(VERSION)/$(FILE)
+	echo "6867008c46307f036e48b42ab9bfdc3224657f6a65d70c58a1f456c4d9348cf6  $(FILE)" | sha256sum --check
+	tar -xzf $(FILE)
 	mv fzf ~/.local/bin/fzf
-	rm fzf-$(VERSION)-linux_amd64.tar.gz
+	rm $(FILE)
+	fzf --version
 
-jq: VERSION = 1.6
+# https://github.com/jqlang/jq/releases/latest
+jq: VERSION = 1.7.1
+jq: FILE = jq-linux64
 jq:
-	if [ -x ~/.local/bin/jq ]; then echo "jq already installed"; false; fi
-	curl -LO https://github.com/stedolan/jq/releases/download/jq-$(VERSION)/jq-linux64
-	echo "af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44 jq-linux64" | sha256sum --check
-	chmod +x jq-linux64
-	mv jq-linux64 ~/.local/bin/jq
+# if [ -x ~/.local/bin/jq ]; then echo "jq already installed"; false; fi
+	curl -LO https://github.com/jqlang/jq/releases/download/jq-$(VERSION)/$(FILE)
+	echo "5942c9b0934e510ee61eb3e30273f1b3fe2590df93933a93d7c58b81d19c8ff5  $(FILE)" | sha256sum --check
+	chmod +x $(FILE)
+	mv $(FILE) ~/.local/bin/jq
+	jq --version
 
 postman:
 	curl -L "https://dl.pstmn.io/download/latest/linux64" -o postman.tar.gz
