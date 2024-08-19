@@ -85,20 +85,33 @@ config.hyperlink_rules = array_concat(wezterm.default_hyperlink_rules(), {
 })
 
 config.font = wezterm.font_with_fallback {
-  { family = 'Cascadia Mono', weight = 'DemiLight' },
+  { family = 'Comic Code' },
   {
     family = 'JetBrains Mono',
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
   },
 }
 
+local scheme = wezterm.get_builtin_color_schemes()['Dracula']
+scheme.scrollbar_thumb = '#454545'
+
 config.adjust_window_size_when_changing_font_size = false
 config.check_for_updates = false
+config.color_schemes = {
+  ['Dracula'] = scheme,
+}
 config.color_scheme = 'Dracula'
 config.font_size = 14
 config.initial_cols = 120
 config.initial_rows = 30
 config.max_fps = 144
+config.enable_scroll_bar = true
+config.window_padding = {
+  left = '0.5cell',
+  right = '0.5cell',
+  top = 0,
+  bottom = 0,
+}
 config.exit_behavior = 'CloseOnCleanExit'
 -- CTRL+C in bash exits with status 130
 config.clean_exit_codes = { 130 }
