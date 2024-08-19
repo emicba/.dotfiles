@@ -65,9 +65,9 @@ if [ "$color_prompt" = yes ]; then
   __prompt_command() {
     local exit=$?
     if [ "$exit" -eq 0 ]; then
-      local lambda="\[\e[32m\]λ"
+      local prompt="\[\e[32m\]$"
     else
-      local lambda="\[\e[31;1m\]λ"
+      local prompt="\[\e[31;1m\]$"
     fi
 
     local c_blue="\[\033[38;2;114;159;207m\]"  # 114, 159, 207
@@ -80,7 +80,7 @@ if [ "$color_prompt" = yes ]; then
       local k8s_ctx=" ☁️ $(grep 'current-context' "$KUBECONFIG" 2>/dev/null | awk '{print $2}')"
     fi
 
-    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}${k8s_ctx:-}" "${c_reset}\n${lambda}${c_reset} "
+    __git_ps1 "${c_blue}\u${c_yellow}@${c_green}\h${c_yellow}:${c_pink}\w${c_reset}${k8s_ctx:-}" "${c_reset}\n${prompt}${c_reset} "
   }
 
   PROMPT_COMMAND='__prompt_command'
