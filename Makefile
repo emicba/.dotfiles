@@ -300,3 +300,11 @@ zoxide:
 	cp zoxide/target/release/zoxide ~/.local/bin/zoxide
 	mkdir -p ~/.local/share/man/man1/
 	cp zoxide/man/man1/* ~/.local/share/man/man1/
+
+delta: VERSION = 0.18.2
+delta: FILE = git-delta_$(VERSION)_amd64.deb
+delta:
+	curl -LO "https://github.com/dandavison/delta/releases/download/$(VERSION)/$(FILE)"
+	echo "1658c7b61825d411b50734f34016101309e4b6e7f5799944cf8e4ac542cebd7f  $(FILE)" | sha256sum --check
+	sudo apt install -y "./$(FILE)"
+	rm "./$(FILE)"
