@@ -187,21 +187,21 @@ gh-cli:
 	sudo apt install -y gh
 
 # https://github.com/shiftkey/desktop/releases/latest
-gh-desktop: VERSION = 3.4.2-linux1
+gh-desktop: VERSION = 3.4.13-linux1
 gh-desktop: FILE = GitHubDesktop-linux-amd64-$(VERSION).deb
 gh-desktop:
 	curl -LO https://github.com/shiftkey/desktop/releases/download/release-$(VERSION)/$(FILE)
-	echo " a98e6b0af3a07f5fd9d345d9eb2027eb329d519fba9783c2b613d4e385cb2a17  $(FILE)" | sha256sum --check
+	printf "8b5577761c7900cac2896b5fbc1d88f5aea48b6ce771437262be2a66ab38d987  $(FILE)" | sha256sum --check
 	sudo apt install -y ./$(FILE)
 	rm $(FILE)
 
 # https://github.com/junegunn/fzf/releases/latest
-fzf: VERSION = 0.54.3
+fzf: VERSION = 0.60.3
 fzf: FILE = fzf-$(VERSION)-linux_amd64.tar.gz
 fzf:
 # if [ -x ~/.local/bin/fzf ]; then echo "fzf already installed"; false; fi
 	curl -LO https://github.com/junegunn/fzf/releases/download/v$(VERSION)/$(FILE)
-	echo "6867008c46307f036e48b42ab9bfdc3224657f6a65d70c58a1f456c4d9348cf6  $(FILE)" | sha256sum --check
+	echo "2937a4f10b0f80e0c974d9459df3bc049b068a97212b0d253c36c9da5920b521  $(FILE)" | sha256sum --check
 	tar -xzf $(FILE)
 	mv fzf ~/.local/bin/fzf
 	rm $(FILE)
