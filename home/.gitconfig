@@ -20,7 +20,9 @@ ff = only
 
 [push]
 autoSetupRemote = true
+default = current
 
 [user]
 name = Emiliano Córdoba
 email = 31087818+emicba@users.noreply.github.com
+signingkey = 2AC9D66FA09D12BC
