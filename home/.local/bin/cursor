@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -eou pipefail
+
+: "${DEBUG:=}"
+if [ -n "$DEBUG" ]; then
+  set -x
+fi
+
+PROGRAM="$(basename "$0")"
+APP_IMAGE="$(find ~/.apps -type f -name 'Cursor*.AppImage' | sort -n | tail -n 1)"
+if [ -z "$APP_IMAGE" ]; then
+  echo "$PROGRAM: no app image found in ~/.apps"
+  exit 1
+fi
+
+# crash if args is not length=1
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $PROGRAM <path>"
+  exit 1
+fi
+
+FILE_OR_DIR="$1"
+if [ ! -e "$FILE_OR_DIR" ]; then
+  echo "$PROGRAM: $FILE_OR_DIR: no such file or directory"
+  exit 1
+fi
+FILE_OR_DIR="$(realpath "$FILE_OR_DIR")"
+
+exec "$APP_IMAGE" --no-sandbox "$FILE_OR_DIR" </dev/null >/dev/null 2>&1 & disown
