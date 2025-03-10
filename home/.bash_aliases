@@ -4,6 +4,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 [ -x "/usr/bin/batcat" ] && alias cat='batcat --plain --paging=never'
+alias code='cursor'
 
 alias ga='git add'
 alias gap='git add -p'
@@ -24,10 +25,20 @@ if [ -f "/usr/share/bash-completion/completions/git" ]; then
   __git_complete gss _git_status
 fi
 
-alias pbcopy="xclip -selection clipboard"
-alias pbpaste="xclip -selection clipboard -o"
-alias c="xclip -selection clipboard"
-alias p="xclip -selection clipboard -o"
+alias pbcopy='xclip -selection clipboard'
+c() {
+  if [ -t 0 ]; then
+    cursor "$@"
+  else
+    pbcopy
+  fi
+}
+alias 'c.'='cursor .'
+alias copy='pbcopy'
+alias pbpaste='xclip -selection clipboard -o'
+alias p='pbpaste'
+alias paste='pbpaste'
+
 
 alias pn='pnpm'
 
