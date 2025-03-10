@@ -1,16 +1,6 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 
-local function array_concat(...)
-  local ret = {}
-  for _, arr in ipairs { ... } do
-    for _, v in ipairs(arr) do
-      table.insert(ret, v)
-    end
-  end
-  return ret
-end
-
 local config = wezterm.config_builder()
 
 config.keys = {
@@ -22,13 +12,7 @@ config.keys = {
     --   cwd = wezterm.home_dir,
     -- }
   },
-  {
-    key = 'q',
-    mods = 'CTRL',
-    action = act.ShowDebugOverlay,
-  },
 }
-
 for i = 1, 8 do
   table.insert(config.keys, {
     key = tostring(i),
@@ -36,7 +20,6 @@ for i = 1, 8 do
     action = act.ActivateTab(i - 1),
   })
 end
-
 config.mouse_bindings = {
   -- Scrolling up while holding CTRL increases the font size
   {
@@ -65,55 +48,36 @@ config.mouse_bindings = {
   },
 }
 
-config.hyperlink_rules = array_concat(wezterm.default_hyperlink_rules(), {
-  {
-    regex = '\\b\\w+://[\\w.-]+\\.[a-z]{2,15}\\S*\\b',
-    format = '$0',
-  },
-  -- Linkify things that look like URLs with numeric addresses as hosts.
-  -- E.g. http://127.0.0.1:8000 for a local development server,
-  -- or http://192.168.1.1 for the web interface of many routers.
-  {
-    regex = [[\b\w+://(?:[\d]{1,3}\.){3}[\d]{1,3}\S*\b]],
-    format = '$0',
-  },
-  -- Linkify localhost URLs
-  {
-    regex = [[\bhttp://localhost(:\d{1,5})?\S*\b]],
-    format = '$0',
-  },
-})
-
+local color_theme = 'GruvboxDarkHard'
+local scheme = wezterm.get_builtin_color_schemes()[color_theme]
+scheme.scrollbar_thumb = '#454545'
+config.color_schemes = {
+  [color_theme] = scheme,
+}
+config.window_padding = {
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
+}
+config.color_scheme = color_theme
 config.font = wezterm.font_with_fallback {
-  { family = 'Comic Code' },
   {
     family = 'JetBrains Mono',
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
   },
 }
-
-local scheme = wezterm.get_builtin_color_schemes()['Dracula']
-scheme.scrollbar_thumb = '#454545'
-
-config.adjust_window_size_when_changing_font_size = false
-config.check_for_updates = false
-config.color_schemes = {
-  ['Dracula'] = scheme,
-}
-config.color_scheme = 'Dracula'
 config.font_size = 14
 config.initial_cols = 120
 config.initial_rows = 30
-config.max_fps = 144
+
+config.max_fps = 75
+config.adjust_window_size_when_changing_font_size = false
 config.enable_scroll_bar = true
-config.window_padding = {
-  left = '0.5cell',
-  right = '0.5cell',
-  top = 0,
-  bottom = 0,
-}
+scheme.scrollbar_thumb = '#454545'
+config.check_for_updates = false
+
 config.exit_behavior = 'CloseOnCleanExit'
--- CTRL+C in bash exits with status 130
 config.clean_exit_codes = { 130 }
 
 return config
