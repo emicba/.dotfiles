@@ -114,7 +114,7 @@ docker: apt-update
 	systemctl --user enable --now docker
 	docker run hello-world
 
-fonts: GEIST_VERSION = 1.3.0
+fonts: GEIST_VERSION = 1.4.01
 fonts:
 	mkdir -p ~/.local/share/fonts
 
@@ -126,13 +126,13 @@ fonts:
 
 # https://github.com/rsms/inter/releases/latest
 	rm -rf /tmp/Inter{,.zip}
-	curl -fsSL https://github.com/rsms/inter/releases/download/v4.0/Inter-4.0.zip -o /tmp/Inter.zip
+	curl -fsSL https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip -o /tmp/Inter.zip
 	unzip /tmp/Inter.zip -d /tmp/Inter
 	cp -t ~/.local/share/fonts /tmp/Inter/*.ttf /tmp/Inter/extras/ttf/*.ttf
 
 # https://github.com/microsoft/cascadia-code/releases/latest
 	rm -rf /tmp/CascadiaCode{,.zip}
-	curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2404.23/CascadiaCode-2404.23.zip -o /tmp/CascadiaCode.zip
+	curl -fsSL https://github.com/microsoft/cascadia-code/releases/download/v2407.24/CascadiaCode-2407.24.zip -o /tmp/CascadiaCode.zip
 	unzip /tmp/CascadiaCode.zip -d /tmp/CascadiaCode
 	cp -t ~/.local/share/fonts /tmp/CascadiaCode/ttf/*.ttf
 
@@ -140,7 +140,7 @@ fonts:
 	rm -rf /tmp/GeistMono*{,.zip}
 	curl -fsSL https://github.com/vercel/geist-font/releases/download/$(GEIST_VERSION)/GeistMono-$(GEIST_VERSION).zip -o /tmp/GeistMono.zip
 	unzip /tmp/GeistMono.zip -d /tmp/GeistMono
-	cp -t ~/.local/share/fonts /tmp/GeistMono/GeistMono-$(GEIST_VERSION)/variable-ttf/*.ttf
+	cp -t ~/.local/share/fonts /tmp/GeistMono/GeistMono-$(GEIST_VERSION)/variable/*.ttf
 
 	fc-cache -f -v
 
