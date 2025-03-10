@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+~/.apps/Flameshot-12.1.0.x86_64.AppImage "$@"
