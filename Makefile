@@ -90,17 +90,17 @@ desktop-apps: apt-update
 	sudo usermod -aG libvirt $$USER
 
 docker: apt-update
-# sudo apt remove docker docker-engine docker.io containerd runc
-# uidmap is required for rootless docker
 	sudo apt install -y \
 		ca-certificates \
 		curl \
 		gnupg \
 		lsb-release \
+		dbus-user-session \
 		uidmap
-	sudo mkdir -m 0755 -p /etc/apt/keyrings
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+	sudo install -m 0755 -d /etc/apt/keyrings
+	sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+	sudo chmod a+r /etc/apt/keyrings/docker.asc
+	echo "deb [arch=$$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $$(lsb_release -cs 2>/dev/null) stable" | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 	sudo apt update
 	sudo apt install -y \
 		docker-ce \
@@ -108,10 +108,11 @@ docker: apt-update
 		containerd.io \
 		docker-buildx-plugin \
 		docker-compose-plugin
-	sudo systemctl disable --now docker.service docker.socket
+	sudo systemctl disable --now docker.socket docker.service
+	sudo rm -f /var/run/docker.sock
 	/usr/bin/dockerd-rootless-setuptool.sh install
-	systemctl --user start docker
-	systemctl --user enable docker
+	systemctl --user enable --now docker
+	docker run hello-world
 
 fonts: GEIST_VERSION = 1.3.0
 fonts:

@@ -152,3 +152,7 @@ if command -v zoxide >/dev/null; then
 fi
 
 export PATH="/usr/local/cuda/bin:$PATH"
+
+if [ -S "/run/user/1000/docker.sock" ]; then
+  export DOCKER_HOST=unix:///run/user/1000/docker.sock
+fi
