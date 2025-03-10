@@ -7,12 +7,6 @@
 [submodule "n"]
 	path = n
 	url = https://github.com/tj/n
-[submodule "work"]
-	path = work
-	url = git@github.com:emicba/.dotfiles-work.git
-[submodule "aws-cli"]
-	path = aws-cli
-	url = https://github.com/aws/aws-cli.git
 [submodule "zoxide"]
 	path = zoxide
 	url = https://github.com/ajeetdsouza/zoxide

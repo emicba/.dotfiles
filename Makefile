@@ -113,42 +113,6 @@ docker: apt-update
 	systemctl --user start docker
 	systemctl --user enable docker
 
-kubectl: VERSION = v1.26.3
-kubectl:
-# $(eval version := $(shell curl -Ls https://dl.k8s.io/release/stable.txt))
-	curl -LO "https://dl.k8s.io/release/$(VERSION)/bin/linux/amd64/kubectl"
-# curl -LO "https://dl.k8s.io/$(version)/bin/linux/amd64/kubectl.sha256"
-# echo "$$(cat kubectl.sha256)  kubectl" | sha256sum --check
-	echo "026c8412d373064ab0359ed0d1a25c975e9ce803a093d76c8b30c5996ad73e75  kubectl" | sha256sum --check
-	chmod +x kubectl
-	mkdir -p ~/.local/bin
-	mv ./kubectl ~/.local/bin/kubectl
-# rm kubectl.sha256
-
-aws: apt-update
-	git submodule update --init --recursive aws-cli
-	cd aws-cli && \
-	./configure --prefix=$$HOME/.local --with-download-deps --with-install-type=portable-exe && \
-	make && \
-	make install
-
-k9s: VERSION = v0.27.3
-k9s:
-	curl -L "https://github.com/derailed/k9s/releases/download/$(VERSION)/k9s_Linux_amd64.tar.gz" -o k9s.tar.gz
-	echo "b0eb5fb0decedbee5b6bd415f72af8ce6135ffb8128f9709bc7adcd5cbfa690b  k9s.tar.gz" | sha256sum --check
-	$(eval tmp := $(shell mktemp -d))
-	tar -xvf k9s.tar.gz -C $(tmp)
-	mv "$(tmp)/k9s" ~/.local/bin/k9s
-	rm -rf k9s.tar.gz $(tmp)
-
-# https://github.com/wez/wezterm/releases/latest
-wezterm: VERSION = 20240203-110809-5046fc22
-wezterm:
-	curl -LO https://github.com/wez/wezterm/releases/download/$(VERSION)/wezterm-$(VERSION).Ubuntu22.04.deb
-	echo "86358dab5794a4fb63f7c91dd68d4fdc3da58faad648a58fc77d2bd51c7b0686 wezterm-$(VERSION).Ubuntu22.04.deb" | sha256sum --check
-	sudo apt install -y ./wezterm-$(VERSION).Ubuntu22.04.deb
-	rm wezterm-$(VERSION).Ubuntu22.04.deb
-
 fonts: GEIST_VERSION = 1.3.0
 fonts:
 	mkdir -p ~/.local/share/fonts
@@ -218,15 +182,6 @@ jq:
 	mv $(FILE) ~/.local/bin/jq
 	jq --version
 
-postman:
-	curl -L "https://dl.pstmn.io/download/latest/linux64" -o postman.tar.gz
-	$(eval tmp := $(shell mktemp -d))
-	tar -xvzf postman.tar.gz -C $(tmp)
-	sudo mkdir -p /opt/postman
-	sudo mv $(tmp)/Postman/* /opt/postman
-	ln -s /opt/postman/Postman ~/.local/bin/postman
-	rm postman.tar.gz
-
 .PHONY: systemd-units
 systemd-units: UNITS = $(wildcard systemd-units/*.service)
 systemd-units:
@@ -242,12 +197,6 @@ udev-rules:
 	sudo cp $(RULES) /etc/udev/rules.d/
 	sudo udevadm trigger
 	sudo udevadm control --reload-rules
-
-brave:
-	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-	echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-	sudo apt update
-	sudo apt install -y brave-browser
 
 obs:
 	sudo add-apt-repository ppa:obsproject/obs-studio -y
@@ -277,22 +226,6 @@ firefox:
 	echo 'Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000' | sudo tee /etc/apt/preferences.d/mozilla
 	sudo apt update
 	sudo apt install -y firefox
-
-firefox-dev:
-ifneq (,$(wildcard /opt/firefox-dev))
-	@echo "Firefox Developer Edition already installed."
-	@false
-endif
-	$(eval TEMP_DIR := $(shell mktemp -d))
-	curl -L "https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US" -o $(TEMP_DIR)/firefox.tar.bz2
-	tar -xvjf $(TEMP_DIR)/firefox.tar.bz2 -C $(TEMP_DIR)
-	sudo mv $(TEMP_DIR)/firefox /opt/firefox-dev
-	rm -rf $(TEMP_DIR)
-	ln -s /opt/firefox-dev/firefox ~/.local/bin/firefox-dev
-
-bun: VERSION = 1.1.0
-bun:
-	curl -fsSL https://bun.sh/install | bash
 
 zoxide:
 	git submodule update --init --recursive zoxide
