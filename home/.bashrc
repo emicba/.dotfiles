@@ -156,3 +156,8 @@ export PATH="/usr/local/cuda/bin:$PATH"
 if [ -S "/run/user/1000/docker.sock" ]; then
   export DOCKER_HOST=unix:///run/user/1000/docker.sock
 fi
+
+if [ -d "/opt/ffmpeg-cuda" ]; then
+  export LD_LIBRARY_PATH="/opt/ffmpeg-cuda/lib:$LD_LIBRARY_PATH"
+  export PATH="/opt/ffmpeg-cuda/bin:$PATH"
+fi
