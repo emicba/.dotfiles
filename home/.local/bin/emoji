@@ -9,7 +9,6 @@ if [ ! -f "$EMOJI_LIST" ]; then
     sed -ne 's/^.*; \(fully\|minimally\)-qualified.*# \(\S*\) \S* \(.*$\)/\2 \3/gp' >"$EMOJI_LIST"
 fi
 
-emoji=$(rofi -dmenu -i -p 'emoji' -async-pre-read 20 -theme 'emoji' <"$EMOJI_LIST" | cut -d' ' -f1)
-xdotool type --delay 50 "$emoji"
+rofi -dmenu -i -p 'emoji' -no-custom -async-pre-read 20 -theme 'emoji' -input "$EMOJI_LIST" | cut -d' ' -f1 | xargs -r -I {} xdotool type --delay 50 '{}'
 
 # 🐸
