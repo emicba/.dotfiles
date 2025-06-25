@@ -39,12 +39,23 @@ config.mouse_bindings = {
     action = wezterm.action_callback(function(window, pane)
       local has_selection = window:get_selection_text_for_pane(pane) ~= ''
       if has_selection then
-        window:perform_action(act.CopyTo 'ClipboardAndPrimarySelection', pane)
+        window:perform_action(act.CopyTo 'PrimarySelection', pane)
       else
         window:perform_action(act.PasteFrom 'Clipboard', pane)
       end
       window:perform_action(act.ClearSelection, pane)
     end),
+  },
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'CTRL',
+    action = act.OpenLinkAtMouseCursor,
+  },
+  -- Disable the 'Down' event of CTRL-Click
+  {
+    event = { Down = { streak = 1, button = 'Left' } },
+    mods = 'CTRL',
+    action = act.Nop,
   },
 }
 
@@ -61,22 +72,39 @@ config.window_padding = {
   bottom = 0,
 }
 config.color_scheme = color_theme
-config.font = wezterm.font_with_fallback {
-  {
+
+local font =
+  -- 'JetBrains Mono'
+  -- 'Comic Code'
+  'Geist Mono'
+
+if font == 'JetBrains Mono' then
+  config.font = wezterm.font {
     family = 'JetBrains Mono',
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
-  },
-}
+  }
+elseif font == 'Comic Code' then
+  config.font = wezterm.font {
+    family = 'Comic Code',
+    harfbuzz_features = { 'ss02=1' },
+  }
+  config.line_height = 1.1
+elseif font == 'Geist Mono' then
+  config.font = wezterm.font {
+    family = 'Geist Mono',
+    weight = 'Medium',
+    harfbuzz_features = { 'liga=0' },
+  }
+end
+
 config.font_size = 14
 config.initial_cols = 120
 config.initial_rows = 30
-
 config.max_fps = 75
 config.adjust_window_size_when_changing_font_size = false
 config.enable_scroll_bar = true
 scheme.scrollbar_thumb = '#454545'
 config.check_for_updates = false
-
 config.exit_behavior = 'CloseOnCleanExit'
 config.clean_exit_codes = { 130 }
 
