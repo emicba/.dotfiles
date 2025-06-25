@@ -1,4 +1,4 @@
-alias ls='ls --group-directories-first --color=auto --human-readable --almost-all --classify -1'
+alias ls='ls --group-directories-first --hyperlink --color=auto --human-readable --almost-all --classify -1'
 alias vim='nvim'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -39,6 +39,7 @@ alias pbpaste='xclip -selection clipboard -o'
 alias p='pbpaste'
 alias paste='pbpaste'
 
+alias webcam='mpv --untimed --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam /dev/video0'
 
 alias pn='pnpm'
 
@@ -75,4 +76,22 @@ serve() {
     exit 1
   fi
   bunx vite --cors --host "0.0.0.0" --open "$@"
+}
+
+ping() {
+  if [ -t 1 ]; then
+    command ping -D "$@" | awk '{
+      if ($0 ~ /^\[/) {
+        ts = substr($1, 2, length($1) - 2);
+        # formatted_ts = "\033[32m" strftime("[%Y-%m-%d %H:%M:%S %Z]", ts) "\033[0m";
+        formatted_ts = "\033[32m" strftime("[%Y-%m-%d %H:%M:%S]", ts) "\033[0m";
+        $1 = formatted_ts;
+        print $0;
+      } else {
+        print $0;
+      }
+    }'
+  else
+    command ping "$@"
+  fi
 }

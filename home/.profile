@@ -11,21 +11,15 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-if [[ "$TERM_PROGRAM" != "vscode" && "$(command -v lolcat >/dev/null)" ]]; then
-    lolcat <<EOF
-⠀⠀⠀⠀⢀⣤⢤⡀
-⠀⣠⠤⠤⠋⢁⠰⢼⡤⢤⣀
-⢾⠁⠀⠀⠀⣵⠋⠳⡜⡆⠀⠉⠓⠲⠤⠤⢤⣀⡀
-⠈⠳⣒⢄⣀⠻⢻⣟⣵⢻⡿⣿⣦⣄⠀⠀⠀⠀⠉⠳⣄
-⠀⠀⠈⠙⣖⠭⣑⠠⠰⢬⠜⠀⠈⠻⢷⣶⣤⡀⠀⠀⠈⠻⣟⣶⣄
-⠀⠀⠀⠀⠘⢦⡀⠉⠀⠀⠈⠁⠀⠀⠀⠈⠙⠻⢷⣆⡀⠀⠈⢯⡟
-⠀⠀⠀⠀⠀⠀⢹⣦⣀⠀⠀⠀⠀⠐⢄⠀⠀⠁⠢⡈⠻⣦⢀⡀⢱⣀⣀⡀
-⠀⠀⠀⢀⣠⣼⣝⣿⣿⣷⣄⡘⢄⠀⠀⠢⡀⠀⠀⡰⠊⢀⡤⠞⠉⠀⠈⢳
-⠸⠿⠟⣛⡿⣿⠾⡿⣟⠿⢿⣻⢳⠃⠀⠀⢸⠀⣸⠁⠀⡌⠀⠀⠀⢀⠄⡞
-⠀⠀⠯⠵⠉⠀⣀⠸⡿⢧⢤⣀⠏⠀⠀⠀⡎⠉⢧⠀⠀⠀⠀⢀⡰⠃⡼⠃
-⠀⠀⠀⠀⠀⠘⢭⡭⢍⣉⠂⠉⠀⠀⣠⡾⠃⢀⣈⡢⠤⠄⢒⠁⢠⡞⠁
-⠀⠀⠀⠀⠀⠀⠯⠬⠐⠒⠒⠒⠒⠒⠋⠀⠀⣹⣶⡿⢛⠔⣁⡴⠋
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡠⢼⠍⣓⢵⠞⡡⠞⠁
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠓⠚⠉⠀⠈⠉⠁
-EOF
+__print_random_pokemon() {
+    # https://gitlab.com/phoneybadger/pokemon-colorscripts
+    local dir="$HOME/dev/pokemon-colorscripts/colorscripts/small/regular/"
+    if [ -d "$dir" ]; then
+        export POKEMON="$(find "$dir" -type f -printf "%f\n" | shuf -n 1)"
+        command cat "$dir/$POKEMON"
+    fi
+}
+
+if [ "$TERM_PROGRAM" = "WezTerm" ]; then
+    __print_random_pokemon
 fi
