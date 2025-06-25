@@ -114,7 +114,6 @@ docker: apt-update
 	systemctl --user enable --now docker
 	docker run hello-world
 
-fonts: GEIST_VERSION = 1.4.01
 fonts:
 	mkdir -p ~/.local/share/fonts
 
@@ -138,10 +137,9 @@ fonts:
 
 # https://github.com/vercel/geist-font/releases/latest
 	rm -rf /tmp/GeistMono*{,.zip}
-	curl -fsSL https://github.com/vercel/geist-font/releases/download/$(GEIST_VERSION)/GeistMono-$(GEIST_VERSION).zip -o /tmp/GeistMono.zip
+	curl -fsSL https://github.com/vercel/geist-font/releases/download/1.5.0/geist-font-1.5.0.zip -o /tmp/GeistMono.zip
 	unzip /tmp/GeistMono.zip -d /tmp/GeistMono
-	cp -t ~/.local/share/fonts /tmp/GeistMono/GeistMono-$(GEIST_VERSION)/variable/*.ttf
-
+	cp -t ~/.local/share/fonts /tmp/GeistMono/geist-font-1.5.0/fonts/GeistMono/ttf/GeistMono-*.ttf
 	fc-cache -f -v
 
 gh-cli:
@@ -224,6 +222,7 @@ firefox:
 		false; \
 	fi
 	echo "deb [signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee /etc/apt/sources.list.d/mozilla.list >/dev/null
+	echo 'Package: firefox*\nPin: release o=Ubuntu*\nPin-Priority: -1' | sudo tee /etc/apt/preferences.d/firefox-no-snap
 	echo 'Package: *\nPin: origin packages.mozilla.org\nPin-Priority: 1000' | sudo tee /etc/apt/preferences.d/mozilla
 	sudo apt update
 	sudo apt install -y firefox
